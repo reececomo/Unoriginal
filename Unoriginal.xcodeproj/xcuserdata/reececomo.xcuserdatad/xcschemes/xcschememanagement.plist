@@ -7,7 +7,20 @@
 		<key>Unoriginal.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>0</integer>
+			<integer>15</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>292F1540211F056800B25AA6</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>292F1554211F056900B25AA6</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

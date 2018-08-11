@@ -12,10 +12,23 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var navigationController: UINavigationController!
 
-
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        // Setup app window/navigation
+        window = UIWindow(frame: UIScreen.main.bounds)
+        navigationController = UINavigationController()
+        
+        // Add root view
+        let searchViewController = SearchViewController.fromStoryboard(named: "Search")
+        navigationController.pushViewController(searchViewController, animated: false)
+        
+        // Start app
+        window?.rootViewController = navigationController
+        window?.makeKeyAndVisible()
+        
         return true
     }
 
@@ -41,6 +54,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-
 }
-
