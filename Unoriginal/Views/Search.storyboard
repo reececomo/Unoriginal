@@ -91,25 +91,34 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Y1-B5-tEH">
+                                <rect key="frame" x="0.0" y="76" width="375" height="591"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="VZc-Ia-QHA" firstAttribute="trailing" secondItem="5n1-e1-G0x" secondAttribute="trailing" id="7c8-Hw-VWn"/>
                             <constraint firstItem="kEC-xT-fO0" firstAttribute="top" secondItem="VZc-Ia-QHA" secondAttribute="bottom" id="8RE-qS-14k"/>
                             <constraint firstAttribute="trailing" secondItem="kEC-xT-fO0" secondAttribute="trailing" id="AXC-f6-Njv"/>
+                            <constraint firstItem="1Y1-B5-tEH" firstAttribute="trailing" secondItem="kEC-xT-fO0" secondAttribute="trailing" id="MzQ-PB-2Tv"/>
                             <constraint firstItem="VZc-Ia-QHA" firstAttribute="leading" secondItem="5n1-e1-G0x" secondAttribute="leading" id="Vjh-Q4-V6I"/>
                             <constraint firstItem="VZc-Ia-QHA" firstAttribute="top" secondItem="5n1-e1-G0x" secondAttribute="top" id="Wy7-ac-T0a"/>
                             <constraint firstItem="rBJ-T9-8Ik" firstAttribute="leading" secondItem="B6U-al-YW4" secondAttribute="leading" id="aZz-e2-wWr"/>
+                            <constraint firstItem="1Y1-B5-tEH" firstAttribute="leading" secondItem="kEC-xT-fO0" secondAttribute="leading" id="bEn-fa-CRm"/>
                             <constraint firstItem="rBJ-T9-8Ik" firstAttribute="bottom" secondItem="5n1-e1-G0x" secondAttribute="top" id="dKG-jt-2pc"/>
                             <constraint firstItem="kEC-xT-fO0" firstAttribute="leading" secondItem="B6U-al-YW4" secondAttribute="leading" id="euM-S5-fPd"/>
                             <constraint firstAttribute="trailing" secondItem="rBJ-T9-8Ik" secondAttribute="trailing" id="hYQ-e6-zj7"/>
                             <constraint firstAttribute="bottom" secondItem="kEC-xT-fO0" secondAttribute="bottom" id="nqx-GW-BHo"/>
+                            <constraint firstItem="1Y1-B5-tEH" firstAttribute="top" secondItem="kEC-xT-fO0" secondAttribute="top" id="o5I-SC-Wbh"/>
+                            <constraint firstItem="1Y1-B5-tEH" firstAttribute="bottom" secondItem="kEC-xT-fO0" secondAttribute="bottom" id="vzP-to-5Hs"/>
                             <constraint firstItem="rBJ-T9-8Ik" firstAttribute="top" secondItem="B6U-al-YW4" secondAttribute="top" id="ydv-IV-bRu"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="5n1-e1-G0x"/>
                     </view>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
+                        <outlet property="emptyView" destination="1Y1-B5-tEH" id="Fad-hd-i0a"/>
                         <outlet property="searchBar" destination="VZc-Ia-QHA" id="QpX-3B-4ue"/>
                         <outlet property="tableView" destination="kEC-xT-fO0" id="elq-Zl-OiN"/>
                     </connections>

@@ -24,6 +24,9 @@ final class SearchViewController: UIViewController, StoryboardViewController {
     /// Table view
     @IBOutlet weak var tableView: UITableView!
     
+    /// Empty tableView -- strong so it doesnt get dereferenced
+    @IBOutlet var emptyView: UIView!
+    
     // MARK: - Properties
     
     /// Search provider
@@ -32,7 +35,7 @@ final class SearchViewController: UIViewController, StoryboardViewController {
     /// Dispose bag (Rx)
     private let disposeBag = DisposeBag()
     
-    private var results = [GitHubRepo]()
+    private var results = [Repo]()
     
     // MARK: - UIViewController
     
@@ -52,11 +55,21 @@ final class SearchViewController: UIViewController, StoryboardViewController {
         tableView.dataSource = self
         tableView.estimatedRowHeight = 80
         tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.keyboardDismissMode = .onDrag
+        tableView.tableFooterView = UIView()
         
         // Setup searchbar
         searchBar.placeholder = "Search for repositories"
         searchBar.enablesReturnKeyAutomatically = true
         bindSearchBar()
+    }
+    
+    /// View did appear
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        // Focus on search bar
+        searchBar.becomeFirstResponder()
     }
     
     // MARK: - Methods
@@ -67,30 +80,46 @@ final class SearchViewController: UIViewController, StoryboardViewController {
             .subscribe(onNext: { query in
             if query.count < 3 {
                 self.results = []
-                self.tableView.reloadData()
+                self.reloadData()
                 Logger().info(query)
                 return
             }
             
             Logger().info("Updating text...")
-            self.search()
+            self.search(query: query)
         }, onError: { error in
             Logger().error(error.localizedDescription)
         }).disposed(by: disposeBag)
     }
     
-    func search() {
-        searchProvider.searchRepositories(query: self.searchBar.text ?? "", language: nil)
-            .subscribe(onSuccess: { repos in
+    func search(query: String) {
+        searchProvider.searchRepositories(query: query, language: nil)
+            .subscribe(onNext: { repos in
                 self.updateTable(repos)
+                return
             }, onError: { error in
                 Logger().error(error.localizedDescription)
+                return
             }).disposed(by: disposeBag)
     }
     
-    func updateTable(_ repos: [GitHubRepo]) {
+    func updateTable(_ repos: [Repo]) {
         results = repos
+        reloadData()
+    }
+    
+    func reloadData() {
         tableView.reloadData()
+        
+        if results.isEmpty {
+            // Show message
+            emptyView.isHidden = false
+            view.bringSubview(toFront: emptyView)
+        } else {
+            // Hide message
+            emptyView.isHidden = true
+            view.sendSubview(toBack: emptyView)
+        }
     }
     
 }
@@ -109,11 +138,13 @@ extension SearchViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchResultCell", for: indexPath) as? SearchResultCell else {
             fatalError("Unable to configure search result cell")
         }
-        let row = indexPath.row
         
-        cell.labelTitle.text = results[row].name
-        cell.labelFullName.text = results[row].fullName
-        cell.labelSummary.text = results[row].description
+        let repo = results[indexPath.row]
+        
+        cell.labelTitle.text = repo.name
+        cell.labelFullName.text = repo.fullName
+        cell.labelSummary.text = repo.description
+        cell.imageIcon.image = UIImage(named: "Hosts/\(repo.host)")
     
         return cell
     }

@@ -22,8 +22,14 @@ final class SearchProvider {
     // MARK: - Methods
     
     /// Search repositories
-    func searchRepositories(query: String, language: String? = nil) -> Single<[GitHubRepo]> {
-        return githubProvider.searchRepositories(query: query, language: language)
+    func searchRepositories(query: String, language: String? = nil) -> Observable<[Repo]> {
+        let githubResults = githubProvider.searchRepositories(query: query, language: language)
+            .map { repos -> [Repo] in
+                return repos as [Repo]
+            }
+            .asObservable()
+        
+        return Observable<[Repo]>.merge(githubResults)
     }
     
 }
